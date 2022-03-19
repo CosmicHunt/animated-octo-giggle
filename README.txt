@@ -1,4 +1,5 @@
 French Vocab Quiz
+You could get and error for "Savant" or "Monstre Marin" beacause there is 2 of those, so try another definition
 
 You Need To Open The main.py file
 and you NEED to download python 3.9 or later
