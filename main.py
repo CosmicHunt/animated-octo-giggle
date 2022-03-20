@@ -63,20 +63,20 @@ def check(e):
             messagebox.showinfo("Congratulation", "You Finished The Quiz With 0 Errors!")
         else:
             if messagebox.askyesno("Congrats",
-                                   f"You Finished The Game\nWith {errors} Errors and you Skipped {skips + 1} times\n"
+                                   f"You Finished The Game\nWith {errors} Errors and you Skipped {skips} times\n"
                                    f"Would You Like To See Your Errors"):
                 toprint = ''
-                wrongs = list(set(wrongs))
-                answers = list(set(answers))
+                wrongs = wrongs
+                answers = answers
                 for i in range(len(wrongs)):
-                    toprint = toprint + f'{answers[i]} est {wrongs[i * -1 - 1]}\n'
+                    toprint = toprint + f'{answers[i]} est {wrongs[i]}\n'
                 messagebox.showinfo('Get Better', toprint)
                 quit()
             else:
                 quit()
     else:
         if entry.get() == '':
-            label1.config(text = "Write Something", fg = 'gold3')
+            label1.config(text = "Write Something", fg = 'chocolate2')
         else:
             if entry.get().title() == toGuess:
                 del words[toGuess]
@@ -101,11 +101,16 @@ def check(e):
                     main()
             else:
                 errors += 1
-                wrongs.append(toGuess)
-                answers.append(words[toGuess])
-                temp_text('e')
-                ErrorLabel.config(text = f"Errors : {errors}")
-                label1.config(text = "Try Again", fg = "red")
+                if toGuess in wrongs:
+                    temp_text('e')
+                    ErrorLabel.config(text=f"Errors : {errors}")
+                    label1.config(text="Try Again", fg="red")
+                else:
+                    wrongs.append(toGuess)
+                    answers.append(words[toGuess])
+                    temp_text('e')
+                    ErrorLabel.config(text = f"Errors : {errors}")
+                    label1.config(text = "Try Again", fg = "red")
 def temp_text(e):
     entry.delete(0, "end")
     entry.config(fg = 'black')
@@ -123,6 +128,8 @@ def main():
     label2.config(text = words[toGuess])
 def skip():
     global skips
+    skips += 1
+    SkipLabel.config(text = f"Skips : {skips}")
     if len(words) == 1:
         wrongs.append(toGuess)
         answers.append(words[toGuess])
@@ -132,7 +139,6 @@ def skip():
         wrongs.append(toGuess)
         answers.append(words[toGuess])
         del words[toGuess]
-        skips += 1
         temp_text('e')
         main()
 
@@ -144,21 +150,24 @@ label1 = tkinter.Label(text = "What Is The Name Of", font = ("Arial", 25))
 label1.pack(pady = 10)
 
 label2 = tkinter.Label(text = "Word", font = ("Arial", 23), fg = "forest green")
-label2.pack(pady = 10)
+label2.pack()
 reset()
 
 ErrorLabel = tkinter.Label(text = f"Errors : {errors}", font = ("Arial", 15), fg = 'red3')
 ErrorLabel.place(y = 160, x = 37.5)
 
+SkipLabel = tkinter.Label(root, text = f"Skips : {skips}", font = ("Arial", 15), fg = 'gold3')
+SkipLabel.place(y = 160, x = 135)
+
 entry = tkinter.Entry(width = 25, font = ("Arial", 21), justify = "center")
 entry.place(y = 190, x = 39)
-entry.insert(0, "Start")
+entry.insert(0, "Start Typing")
 entry.bind("<Return>", check)
 entry.bind("<FocusIn>", temp_text)
 
 photo_skip = tkinter.PhotoImage(file = r"skip.png")
-SkipB = tkinter.Button(root, height = 32, width = 32, image = photo_skip, command=skip)
-SkipB.place(y = 150, x = 405)
+SkipB = tkinter.Button(text = "Skip", height = 32, width = 64, image = photo_skip, compound = 'left', command=skip)
+SkipB.place(y = 147.5, x = 371)
 
 photo_quit = tkinter.PhotoImage(file = r"quit.png")
 Quit = tkinter.Button(root, height = 32, width = 32, image = photo_quit, command=lambda:quit())
