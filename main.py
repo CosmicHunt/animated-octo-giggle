@@ -9,7 +9,7 @@ definitions = {
     "Altérer" : "Assoiffer",
     "Armateur" : "Propriétaire d’un navire",
     "Atavique" : "Héréditaire",
-    "Behemoth" : "Monstre marin",
+    "Behemoth" : "Monstre marin 1",
     "Bey" : "Officier d’un sultan",
     "Cabalistique" : "Mystérieux, difficile à comprendre",
     "Chébèque" : "Voilier turc",
@@ -21,10 +21,10 @@ definitions = {
     "Damasquiné" : "Incrusté de filets d’argent ou d’or",
     "Délié" : "Tracé d’une lettre",
     "Dessein" : "Destin, aventure",
-    "Docte" : "Savant",
+    "Docte" : "Savant 1",
     "Dodu" : "Grassouillet",
     "Émissaire" : "Agent cherché d’une mission",
-    "Érudit" : "Savant",
+    "Érudit" : "Savant 2",
     "Escarcelle" : "Bourse attachée à la ceinture",
     "Étique" : "Très maigre",
     "Famélique" : "Amaigri par manque de nourriture",
@@ -39,7 +39,7 @@ definitions = {
     "Lagune" : "Étendue d’eau séparée \npar une bande de terre",
     "Languissant" : "Qui manque d’énergie",
     "Lépante" : "Grande bataille maritime\n de l’Antiquité",
-    "Léviathan" : "Monstre marin",
+    "Léviathan" : "Monstre marin 2",
     "Occis" : "Tué",
     "Ottoman" : "Turc",
     "Pécune" : "Argent",
@@ -57,36 +57,84 @@ definitions = {
 
 
 def check(e):
-    global errors
-    if entry.get() == '':
-        label1.config(text = "Write Something", fg = 'gold3')
-    else:
-        if entry.get().title() == toGuess:
-            del words[toGuess]
-            if len(words) == 0:
-                messagebox.showinfo("You Finished", f"You Finished The Game With {errors} Errors")
+    global errors, wrongs, answers
+    if e == "skip":
+        if errors == 0 and skips == 0:
+            messagebox.showinfo("Congratulation", "You Finished The Quiz With 0 Errors!")
+        else:
+            if messagebox.askyesno("Congrats",
+                                   f"You Finished The Game\nWith {errors} Errors and you Skipped {skips + 1} times\n"
+                                   f"Would You Like To See Your Errors"):
+                toprint = ''
+                wrongs = list(set(wrongs))
+                answers = list(set(answers))
+                for i in range(len(wrongs)):
+                    toprint = toprint + f'{answers[i]} est {wrongs[i * -1 - 1]}\n'
+                messagebox.showinfo('Get Better', toprint)
                 quit()
             else:
-                temp_text('e')
-                label1.config(text = 'What Is The Name Of', fg = "black")
-                main()
+                quit()
+    else:
+        if entry.get() == '':
+            label1.config(text = "Write Something", fg = 'gold3')
         else:
-            errors += 1
-            ErrorLabel.config(text = f"Errors : {errors}")
-            label1.config(text = "Try Again", fg = "red")
+            if entry.get().title() == toGuess:
+                del words[toGuess]
+                if len(words) == 0:
+                    if errors == 0 and skips == 0:
+                        messagebox.showinfo("Congratulation", "You Finished The Quiz With 0 Errors!")
+                    else:
+                        if messagebox.askyesno("Congrats", f"You Finished The Game\nWith {errors} Errors and you Skipper {skips} times\n"
+                                                        f"Would You Like To See Your Errors"):
+                             toprint = ''
+                             wrongs = list(set(wrongs))
+                             answers = list(set(answers))
+                             for i in range(len(wrongs)):
+                                toprint = toprint+f'{answers[i]} est {wrongs[i*-1-1]}\n'
+                             messagebox.showinfo('Get Better', toprint)
+                             quit()
+                        else:
+                            quit()
+                else:
+                    temp_text('e')
+                    label1.config(text = 'What Is The Name Of', fg = "black")
+                    main()
+            else:
+                errors += 1
+                wrongs.append(toGuess)
+                answers.append(words[toGuess])
+                temp_text('e')
+                ErrorLabel.config(text = f"Errors : {errors}")
+                label1.config(text = "Try Again", fg = "red")
 def temp_text(e):
     entry.delete(0, "end")
     entry.config(fg = 'black')
 def reset():
-    global words, errors
+    global words, errors, wrongs, answers, skips
     errors = 0
+    skips = 0
     words = definitions
+    wrongs = []
+    answers = []
     main()
 def main():
     global errors, toGuess
     toGuess = random.choice(list(words))
     label2.config(text = words[toGuess])
-
+def skip():
+    global skips
+    if len(words) == 1:
+        wrongs.append(toGuess)
+        answers.append(words[toGuess])
+        del words[toGuess]
+        check('skip')
+    else:
+        wrongs.append(toGuess)
+        answers.append(words[toGuess])
+        del words[toGuess]
+        skips += 1
+        temp_text('e')
+        main()
 
 root = tkinter.Tk()
 root.geometry("500x250")
@@ -108,8 +156,12 @@ entry.insert(0, "Start")
 entry.bind("<Return>", check)
 entry.bind("<FocusIn>", temp_text)
 
-photo = tkinter.PhotoImage(file = r"quit.png")
-Quit = tkinter.Button(root, height = 32, width = 32, image = photo, command=lambda:quit())
+photo_skip = tkinter.PhotoImage(file = r"skip.png")
+SkipB = tkinter.Button(root, height = 32, width = 32, image = photo_skip, command=skip)
+SkipB.place(y = 150, x = 405)
+
+photo_quit = tkinter.PhotoImage(file = r"quit.png")
+Quit = tkinter.Button(root, height = 32, width = 32, image = photo_quit, command=lambda:quit())
 Quit.place(y = 0, x = 0)
 
 
