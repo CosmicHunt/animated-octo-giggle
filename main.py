@@ -1,6 +1,9 @@
 import random
 import tkinter
-from tkinter import messagebo"Abîme" : "Espace vide",
+from tkinter import messagebox
+
+definitions = {
+    "Abîme" : "Espace vide",
     "Abysse" : "Gouffre marin",
     "Akkad" : "État de la Mésopotamie antique",
     "Altérer" : "Assoiffer",
