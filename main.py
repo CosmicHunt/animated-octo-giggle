@@ -90,7 +90,7 @@ def check(e):
                              wrongs = wrongs
                              answers = answers
                              for i in range(len(wrongs)):
-                                toprint = toprint+f'{answers[i]} est {wrongs[i*-1-1]}\n'
+                                toprint = toprint+f'{answers[i]} est {wrongs[i]}\n'
                              messagebox.showinfo('Get Better', toprint)
                              quit()
                         else:
