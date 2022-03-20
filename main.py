@@ -156,7 +156,7 @@ reset()
 ErrorLabel = tkinter.Label(text = f"Errors : {errors}", font = ("Arial", 15), fg = 'red3')
 ErrorLabel.place(y = 160, x = 37.5)
 
-SkipLabel = tkinter.Label(root, text = f"Skips : {skips}", font = ("Arial", 15), fg = 'gold3')
+SkipLabel = tkinter.Label(root, text = f"Skips : {skips}", font = ("Arial", 15), fg = 'gold2')
 SkipLabel.place(y = 160, x = 135)
 
 entry = tkinter.Entry(width = 25, font = ("Arial", 21), justify = "center")
@@ -166,7 +166,7 @@ entry.bind("<Return>", check)
 entry.bind("<FocusIn>", temp_text)
 
 photo_skip = tkinter.PhotoImage(file = r"skip.png")
-SkipB = tkinter.Button(text = "Skip", height = 32, width = 64, image = photo_skip, compound = 'left', command=skip)
+SkipB = tkinter.Button(text = "Skip", fg = 'gold4', height = 32, width = 64, image = photo_skip, compound = 'left', command=skip)
 SkipB.place(y = 147.5, x = 371)
 
 photo_quit = tkinter.PhotoImage(file = r"quit.png")
