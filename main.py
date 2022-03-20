@@ -54,25 +54,26 @@ definitions = {
     "Umar Kayyam" : "Philosophe perse",
     "Versatile" : "Converti (religion)",
 }
-def sure():
-    quit()
-def wait():
-    label1.config(text = 'What Is The Name Of', fg = "black")
+
+
 def check(e):
     global errors
-    if entry.get() == toGuess:
-        del words[toGuess]
-        if len(words) == 0:
-            messagebox.showinfo("You Finished", f"You Finished The Game With {errors} Errors")
-            quit()
-        else:
-            temp_text('e')
-            wait()
-            main()
+    if entry.get() == '':
+        label1.config(text = "Write Something", fg = 'gold3')
     else:
-        errors += 1
-        ErrorLabel.config(text = f"Errors : {errors}")
-        label1.config(text = "Try Again", fg = "red")
+        if entry.get().title() == toGuess:
+            del words[toGuess]
+            if len(words) == 0:
+                messagebox.showinfo("You Finished", f"You Finished The Game With {errors} Errors")
+                quit()
+            else:
+                temp_text('e')
+                label1.config(text = 'What Is The Name Of', fg = "black")
+                main()
+        else:
+            errors += 1
+            ErrorLabel.config(text = f"Errors : {errors}")
+            label1.config(text = "Try Again", fg = "red")
 def temp_text(e):
     entry.delete(0, "end")
     entry.config(fg = 'black')
@@ -101,14 +102,14 @@ reset()
 ErrorLabel = tkinter.Label(text = f"Errors : {errors}", font = ("Arial", 15), fg = 'red3')
 ErrorLabel.place(y = 160, x = 37.5)
 
-entry = tkinter.Entry(width = 25, font = ("Arial", 23), justify = "center")
+entry = tkinter.Entry(width = 25, font = ("Arial", 21), justify = "center")
 entry.place(y = 190, x = 39)
 entry.insert(0, "Start")
 entry.bind("<Return>", check)
 entry.bind("<FocusIn>", temp_text)
 
 photo = tkinter.PhotoImage(file = r"quit.png")
-Quit = tkinter.Button(root, height = 32, width = 32, image = photo, command=sure)
+Quit = tkinter.Button(root, height = 32, width = 32, image = photo, command=lambda:quit())
 Quit.place(y = 0, x = 0)
 
 
