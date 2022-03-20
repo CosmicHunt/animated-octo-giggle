@@ -87,8 +87,8 @@ def check(e):
                         if messagebox.askyesno("Congrats", f"You Finished The Game\nWith {errors} Errors and you Skipper {skips} times\n"
                                                         f"Would You Like To See Your Errors"):
                              toprint = ''
-                             wrongs = list(set(wrongs))
-                             answers = list(set(answers))
+                             wrongs = wrongs
+                             answers = answers
                              for i in range(len(wrongs)):
                                 toprint = toprint+f'{answers[i]} est {wrongs[i*-1-1]}\n'
                              messagebox.showinfo('Get Better', toprint)
