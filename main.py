@@ -130,6 +130,7 @@ def skip():
     global skips
     skips += 1
     SkipLabel.config(text = f"Skips : {skips}")
+    label1.config(text='What Is The Name Of', fg="black")
     if len(words) == 1:
         if toGuess in wrongs:
             del words[toGuess]
