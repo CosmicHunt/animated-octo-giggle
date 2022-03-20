@@ -36,9 +36,9 @@ definitions = {
     "Huis" : "Porte",
     "Hyksos" : "Dynastie égyptienne",
     "Infortune" : "Mésaventure",
-    "Lagune" : "Étendue d’eau séparée \npar une bande de terre",
+    "Lagune" : "Étendue d’eau séparée\npar une bande de terre",
     "Languissant" : "Qui manque d’énergie",
-    "Lépante" : "Grande bataille maritime\n de l’Antiquité",
+    "Lépante" : "Grande bataille maritime\nde l’Antiquité",
     "Léviathan" : "Monstre marin 2",
     "Occis" : "Tué",
     "Ottoman" : "Turc",
@@ -131,16 +131,25 @@ def skip():
     skips += 1
     SkipLabel.config(text = f"Skips : {skips}")
     if len(words) == 1:
-        wrongs.append(toGuess)
-        answers.append(words[toGuess])
-        del words[toGuess]
-        check('skip')
+        if toGuess in wrongs:
+            del words[toGuess]
+            check('skip')
+        else:
+            wrongs.append(toGuess)
+            answers.append(words[toGuess])
+            del words[toGuess]
+            check('skip')
     else:
-        wrongs.append(toGuess)
-        answers.append(words[toGuess])
-        del words[toGuess]
-        temp_text('e')
-        main()
+        if toGuess in wrongs:
+            del words[toGuess]
+            temp_text('e')
+            main()
+        else:
+            wrongs.append(toGuess)
+            answers.append(words[toGuess])
+            del words[toGuess]
+            temp_text('e')
+            main()
 
 root = tkinter.Tk()
 root.geometry("500x250")
