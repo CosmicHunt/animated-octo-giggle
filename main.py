@@ -60,12 +60,12 @@ def check(e):
     global errors, wrongs, answers
     if e == "skip":
         if errors == 0 and skips == 0:
-            messagebox.showinfo("Congratulation", "You Finished The Quiz With 0 Errors!")
+            messagebox.showinfo("Bravo!", "Tu as fini le quiz avec 0 erreures!")
             quit()
         else:
-            if messagebox.askyesno("Congrats",
-                                   f"You Finished The Game\nWith {errors} Errors and you Skipped {skips} times\n"
-                                   f"Would You Like To See Your Errors"):
+            if messagebox.askyesno("Bravo!",
+                                   f"Tu as fini le jeu\navec {errors} erreures et tu as skipper {skips} fois\n"
+                                   f"Voudrais-tu voir tes erreures?"):
                 toprint = ''
                 wrongs = wrongs
                 answers = answers
@@ -77,16 +77,16 @@ def check(e):
                 quit()
     else:
         if entry.get() == '':
-            label1.config(text = "Write Something", fg = 'chocolate2')
+            label1.config(text = "Écrit Quelque Chose", fg = 'chocolate2')
         else:
             if entry.get().title() == toGuess:
                 del words[toGuess]
                 if len(words) == 0:
                     if errors == 0 and skips == 0:
-                        messagebox.showinfo("Congratulation", "You Finished The Quiz With 0 Errors!")
+                        messagebox.showinfo("Félicitation", "Tu as fini le jeu avec 0 erreures!")
                     else:
-                        if messagebox.askyesno("Congrats", f"You Finished The Game\nWith {errors} Errors and you Skipped {skips} times\n"
-                                                        f"Would You Like To See Your Errors"):
+                        if messagebox.askyesno("Bravo", f"Tu as fini le jeu\navec {errors} erreures et tu as skipper {skips} fois\n"
+                                                        f"Voudrais-tu voir tes erreures"):
                              toprint = ''
                              wrongs = wrongs
                              answers = answers
@@ -98,20 +98,20 @@ def check(e):
                             quit()
                 else:
                     temp_text('e')
-                    label1.config(text = 'What Is The Name Of', fg = "black")
+                    label1.config(text = "C'est quoi le nom de", fg = "black")
                     main()
             else:
                 errors += 1
                 if toGuess in wrongs:
                     temp_text('e')
-                    ErrorLabel.config(text=f"Errors : {errors}")
-                    label1.config(text="Try Again", fg="red")
+                    ErrorLabel.config(text=f"Erreures : {errors}")
+                    label1.config(text="Essaie encore", fg="red")
                 else:
                     wrongs.append(toGuess)
                     answers.append(words[toGuess])
                     temp_text('e')
-                    ErrorLabel.config(text = f"Errors : {errors}")
-                    label1.config(text = "Try Again", fg = "red")
+                    ErrorLabel.config(text = f"Erreures : {errors}")
+                    label1.config(text = "Essaie encore", fg = "red")
 def temp_text(e):
     entry.delete(0, "end")
     entry.config(fg = 'black')
@@ -131,7 +131,7 @@ def skip():
     global skips
     skips += 1
     SkipLabel.config(text = f"Skips : {skips}")
-    label1.config(text='What Is The Name Of', fg="black")
+    label1.config(text= "C'est quoi le nom de", fg="black")
     if len(words) == 1:
         if toGuess in wrongs:
             del words[toGuess]
@@ -156,23 +156,23 @@ def skip():
 root = tkinter.Tk()
 root.geometry("500x250")
 root.resizable(False, False)
-root.title("French Vocab Quiz")
-label1 = tkinter.Label(text = "What Is The Name Of", font = ("Arial", 25))
+root.title("Quiz de Capes et de Crocs")
+label1 = tkinter.Label(text = "C'est quoi le nom de", font = ("Arial", 25))
 label1.pack(pady = 10)
 
 label2 = tkinter.Label(text = "Word", font = ("Arial", 23), fg = "forest green")
 label2.pack()
 reset()
 
-ErrorLabel = tkinter.Label(text = f"Errors : {errors}", font = ("Arial", 15), fg = 'red3')
+ErrorLabel = tkinter.Label(text = f"Erreures : {errors}", font = ("Arial", 15), fg = 'red3')
 ErrorLabel.place(y = 160, x = 37.5)
 
 SkipLabel = tkinter.Label(root, text = f"Skips : {skips}", font = ("Arial", 15), fg = 'gold2')
-SkipLabel.place(y = 160, x = 135)
+SkipLabel.place(y = 160, x = 160)
 
 entry = tkinter.Entry(width = 25, font = ("Arial", 21), justify = "center")
 entry.place(y = 190, x = 39)
-entry.insert(0, "Start Typing")
+entry.insert(0, "Commence à taper")
 entry.bind("<Return>", check)
 entry.bind("<FocusIn>", temp_text)
 
