@@ -1,9 +1,7 @@
-French Vocab Quiz
+Quiz de Capes et de Crocs
 Savant 1 est Docte. Savant 2 est Érudit
 Monstre Marin 1 est Behemoth. Monstre Marin 2 est Léviathan
 
-You Need To Open The main.py file
-and you NEED to download python 3.9 or later
-In Here: https://www.python.org/downloads/
-
-You're Welcome
+il faut installer python 3.9 et +
+tu peux installer ici: https://www.python.org/downloads/
+et ouvrir le file main.py
